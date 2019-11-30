@@ -1,0 +1,13 @@
+---
+---
+
+$header-bg-color: #2FAC2F;
+$header-bg-color-secondary: #2FAC2F;
+
+$body-link-color: #7EA7D3;
+
+@import "{{ site.theme }}";
+
+.main-content {
+  max-width: 100%;
+}
