@@ -1,0 +1,164 @@
+---
+output: github_document
+always_allow_html: true
+---
+
+```{r, echo = F}
+library(pander)
+```
+
+I had colleagues interested in simple access to USGS gauge data, but they had limited experience with R.  I developed the [script](https://github.com/mguyette/QueryUSGS/blob/master/USGSDataRetrieval.R) in this GitHub repo to generate a quick CSV export of USGS data based on a user's input parameters.  Users simply update the frequency, site numbers, parameter codes, start date, end date, statistic code, time zone, and the path for downloads.  This project briefly summarizes the steps used in the script.
+
+Note that the script in the GitHub repo is designed to allow users to easily jump to the lines of code that need to be changed for each use by making use of the [Code Sections](https://support.rstudio.com/hc/en-us/articles/200484568-Code-Folding-and-Sections) functionality in RStudio (at least four # in a row at the end of line creates a new Section).
+
+## dataRetrieval package
+
+USGS gauge data can be queried using the USGS R package, **dataRetrieval**.
+
+```{r}
+if (!("dataRetrieval" %in% installed.packages())) {
+    install.packages("dataRetrieval") 
+}
+library(dataRetrieval)
+```
+
+## Input arguments
+
+#### frequency
+
+The user can choose "daily", "instantaneous", or both, as shown here.  This selection will call different functions in the **dataRetrieval** package, **readNWISdv** for daily values and **readNWISuv** for instantaneous values.
+
+```{r}
+frequency <- c("daily", "instantaneous")
+```
+
+#### siteNumbers
+
+This argument takes one or many USGS site numbers, which are eight or fifteen digit numbers such as 02232500 or 291442081384201.  If a user doesn't already know their site number(s) of interest, they can be found through the [National Water Information System Mapper](https://maps.waterdata.usgs.gov/mapper/index.html).
+
+```{r}
+siteNumbers <- c("02232500", "02232400", "02234000")
+```
+
+#### parameterCd
+
+This argument takes one 5-digit USGS parameter code.  Common parameters include:   
+
+* 00060 - Discharge, cubic feet per second  
+* 00065 - Gage Height, feet  
+* 63130 - Stream water level elevation above NAVD 1988, in feet  
+
+```{r}
+parameterCd <- "00065"
+```
+
+The **dataRetrieval** package includes a table of parameter codes called **parameterCdfile**.  Users can view this to look up parameter codes of interest, or you can search for parameter codes on the [NWIS website](https://nwis.waterdata.usgs.gov/nwis/pmcodes/).  The first few rows of the data frame stored with the package are shown here:
+```{r, echo = F, results = "as.is"}
+pander(head(parameterCdFile), style = "rmarkdown", split.tables = Inf)
+```
+
+#### startDate and endDate
+
+Designating the start date and end date is optional, but depending on the frequency, siteNumbers, and parameterCd selections, omitting these parameters could result in a very long run time for the function.
+
+Note that the dates must be ISO 8601 formatted ("YYYY-MM-DD").  If omitting a date variable, simply assign the variable to "".
+
+```{r}
+startDate <- "2017-10-10"
+endDate <- "2017-11-10"
+```
+
+#### statCd
+
+If you select a "daily" frequency, you can select a statistic that you'd like to have the retrieval report for the daily summary.  This argument makes use of NWIS statistic codes, which are 5-digit codes.  Common statistic codes include:
+
+* 00001 - Maximum
+* 00002 - Minimum
+* 00003 - Mean
+* 00006 - Sum
+* 00008 - Median
+
+By default, the mean statCd, "00003", is used.  
+
+```{r}
+statCd <- c("00003")
+```
+
+You can view a comprehensive list of statistic codes on the [NWIS website](https://help.waterdata.usgs.gov/stat_code).
+
+#### tz
+
+By default, this query retrieves data in UTC.  If you are interested in a different time zone, designate it here.  For example, if you are interested in Eastern Standard Time, use "EST".  If you are interested in Eastern Daylight Time, use "America/New_York".
+
+```{r}
+tz <- "EST"
+```
+
+#### Export Path
+
+The function in this script retrieves data and writes these data as a CSV to a designated location.  The script stores your desired path for your CSV download(s) here:
+
+```{r}
+path <- "./Exports"
+```
+
+## getUSGSdata function
+
+The remainder of the script contains the definition of a function, **getUSGSdata**, and a call to this function using the arguments defined above.
+
+This function calls the appropriate function(s) in **dataRetrieval**, depending on the frequency (or frequencies) designated, and writes the retrieved data to you designated **path**.
+
+```{r, eval = F}
+getUSGSdata <- function(frequency, siteNumbers, parameterCd,
+                        startDate, endDate, statCd, tz, path) {
+    ## Create a file prefix that includes all site numbers to be used in
+    ## the file name
+    filePrefix <- paste(siteNumbers, collapse = "_", sep = "")
+    ## If daily values are requested
+    if ("daily" %in% frequency) {
+        ## Query NWIS
+        dvData <- readNWISdv(siteNumbers, parameterCd, startDate, endDate, statCd)
+        ## Rename columns, changing parameter codes to text
+        dvData <- renameNWISColumns(dvData)
+        ## Write the data to a CSV file
+        write.csv(dvData,paste(path, "/", filePrefix, "_daily_",
+                               Sys.Date(), ".csv", sep = ""),
+                  row.names = F, na = "")
+    }
+    ## If instantaneous values are requested
+    if ("instantaneous" %in% frequency) {
+        ## Query NWIS
+        uvData <- readNWISuv(siteNumbers, parameterCd, startDate, endDate, tz)
+        ## Rename columns, changing parameter codes to text
+        uvData <- renameNWISColumns(uvData)
+        ## Write the data to a CSV file
+        write.csv(uvData,paste(path, "/", filePrefix, "_inst_",
+                               Sys.Date(), ".csv", sep = ""),
+                  row.names = F, na = "")
+    }
+}
+
+getUSGSdata(frequency, siteNumbers, parameterCd,
+            startDate, endDate ,statCd, tz, path)
+```
+
+## Exported files
+
+Example exports can be viewed in the GitHub repo [here](https://github.com/mguyette/QueryUSGS/tree/master/Exports).
+
+The first few rows of the daily values output, imported as a data frame, look like this:
+
+```{r, echo = F, results = "as.is", message = F}
+pander(head(readr::read_csv("./Exports/02232500_02232400_02234000_daily_2018-01-09.csv",
+                            col_types = "ccDdcdc")),
+       style = "rmarkdown", split.tables = Inf)
+```
+
+The first few rows of the instantaneous values output, imported as a data frame, look like this:
+
+```{r, echo = F, results = "as.is", message = F}
+pander(head(readr::read_csv("./Exports/02232500_02232400_02234000_inst_2018-01-09.csv",
+                            col_types = "ccTdcdcc")),
+       style = "rmarkdown", split.tables = Inf)
+```
+
