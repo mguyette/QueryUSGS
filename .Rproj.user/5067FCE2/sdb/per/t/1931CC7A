@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1515521805594.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "1931CC7A",
+    "lastKnownWriteTime" : 3419473789575321445,
+    "last_content_update" : 1515521805594,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "234D615B",
+        "caption" : "parameterCdFile",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3AdataRetrieval&obj=parameterCdFile&cache_key=234D615B",
+        "displayedObservations" : "16980",
+        "environment" : "package:dataRetrieval",
+        "object" : "parameterCdFile",
+        "preview" : "0",
+        "totalObservations" : "16980",
+        "variables" : "6"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}

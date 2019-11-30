@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1515523152763.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "BEEE1B90",
+    "lastKnownWriteTime" : 7308604914264011873,
+    "last_content_update" : 1515523152763,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "D98C194B",
+        "caption" : "stateCd",
+        "contentUrl" : "grid_resource/gridviewer.html?env=package%3AdataRetrieval&obj=stateCd&cache_key=D98C194B",
+        "displayedObservations" : 57,
+        "environment" : "package:dataRetrieval",
+        "object" : "stateCd",
+        "preview" : 0,
+        "totalObservations" : 57,
+        "variables" : 4
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
