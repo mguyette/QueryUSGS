@@ -1,4 +1,35 @@
 
+<html>
+
+<head>
+
+<style>
+.button {
+  background-color: #00724F;
+  border: none;
+  color: white;
+  padding: 8px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #00724F;
+}
+</style>
+
+</head>
+
+<body>
+
 I had colleagues interested in simple access to USGS gauge data, but
 they had limited experience with R. I developed the
 [script](https://github.com/mguyette/QueryUSGS/blob/master/USGSDataRetrieval.R)
@@ -211,3 +242,13 @@ data frame, look like this:
 |    USGS    | 02232400 | 2017-10-09 23:45:00 |    7440    |       P        |  17.32   |      P       |  EST   |
 |    USGS    | 02232400 |     2017-10-10      |    7690    |       P        |  17.32   |      P       |  EST   |
 |    USGS    | 02232400 | 2017-10-10 00:15:00 |    7550    |       P        |  17.32   |      P       |  EST   |
+
+Return to <button class="button button1">[Data
+Preparation](https://mguyette.github.io/DataPreparation/)</button>
+<button class="button button1">[Languages](https://mguyette.github.io/Languages/)</button>
+<button class="button button1">[Data Science
+Portfolio](https://mguyette.github.io/)</button>
+
+</body>
+
+</html>

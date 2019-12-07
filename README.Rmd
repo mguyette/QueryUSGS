@@ -3,6 +3,33 @@ output: github_document
 always_allow_html: true
 ---
 
+<html>
+<head>
+<style>
+.button {
+  background-color: #00724F;
+  border: none;
+  color: white;
+  padding: 8px 8px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button1 {
+  background-color: white; 
+  color: black; 
+  border: 2px solid #00724F;
+}
+</style>
+</head>
+<body>
+
 ```{r, echo = F}
 library(pander)
 ```
@@ -162,3 +189,10 @@ pander(head(readr::read_csv("./Exports/02232500_02232400_02234000_inst_2018-01-0
        style = "rmarkdown", split.tables = Inf)
 ```
 
+Return to <button class="button button1">[Data Preparation](https://mguyette.github.io/DataPreparation/)</button>
+<button class="button button1">[Languages](https://mguyette.github.io/Languages/)</button>
+<button class="button button1">[Data Science Portfolio](https://mguyette.github.io/)</button> 
+
+
+</body>
+</html>
