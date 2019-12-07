@@ -1,7 +1,6 @@
 ---
 output: github_document
 always_allow_html: true
-footer: [Data Preparation](https://mguyette.github.io/DataPreparation/)
 ---
 
 ```{r, echo = F}
@@ -162,8 +161,3 @@ pander(head(readr::read_csv("./Exports/02232500_02232400_02234000_inst_2018-01-0
                             col_types = "ccTdcdcc")),
        style = "rmarkdown", split.tables = Inf)
 ```
-
-Return to [Data Preparation](https://mguyette.github.io/DataPreparation/)
-[Languages](https://mguyette.github.io/Languages/)
-[Data Science Portfolio](https://mguyette.github.io/)
-

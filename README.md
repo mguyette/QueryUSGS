@@ -211,8 +211,3 @@ data frame, look like this:
 |    USGS    | 02232400 | 2017-10-09 23:45:00 |    7440    |       P        |  17.32   |      P       |  EST   |
 |    USGS    | 02232400 |     2017-10-10      |    7690    |       P        |  17.32   |      P       |  EST   |
 |    USGS    | 02232400 | 2017-10-10 00:15:00 |    7550    |       P        |  17.32   |      P       |  EST   |
-
-Return to [Data
-Preparation](https://mguyette.github.io/DataPreparation/)
-[Languages](https://mguyette.github.io/Languages/) [Data Science
-Portfolio](https://mguyette.github.io/)
